@@ -1,0 +1,48 @@
+.signup-paper {
+  margin-top: 64px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-title {
+  margin-bottom: 24px;
+}
+
+.signup-stepper {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.signup-form {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.profile-image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.signup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+}
+
+.back-button,
+.next-button,
+.submit-button {
+  min-width: 100px;
+}
+
+.login-prompt {
+  margin-top: 24px;
+}
+
+.login-link {
+  text-transform: none;
+} 

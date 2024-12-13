@@ -1,0 +1,56 @@
+.login-paper {
+  margin-top: 64px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-title {
+  margin-bottom: 24px;
+}
+
+.login-form {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.login-alert {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.submit-button {
+  margin: 24px 0 16px;
+}
+
+.divider {
+  margin: 24px 0;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.google-button {
+  background-color: #fff;
+  color: #757575;
+  border-color: #dbdbdb;
+}
+
+.facebook-button {
+  background-color: #fff;
+  color: #1877f2;
+  border-color: #1877f2;
+}
+
+.signup-prompt {
+  margin-top: 16px;
+}
+
+.signup-link {
+  text-transform: none;
+} 
