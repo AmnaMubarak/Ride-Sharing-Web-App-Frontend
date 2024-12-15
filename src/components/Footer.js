@@ -9,7 +9,6 @@ import {
   Stack,
   TextField,
   Divider,
-  useTheme,
 } from '@mui/material';
 import {
   Facebook,
@@ -27,7 +26,6 @@ import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
-  const theme = useTheme();
   const year = new Date().getFullYear();
 
   const footerLinks = {

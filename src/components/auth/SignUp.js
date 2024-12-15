@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from 'react-icons/fa';
-import '../../styles/auth/Auth.css';
+import authService from '../../services/authService';
+import { CircularProgress } from '@mui/material';
+import { Alert } from '@mui/material';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -13,11 +13,41 @@ const SignUp = () => {
     password: '',
     confirmPassword: ''
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return false;
+    }
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters');
+      return false;
+    }
+    // Add email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Invalid email format');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('SignUp:', formData);
-    navigate('/dashboard');
+    if (!validateForm()) return;
+    setLoading(true);
+    setError('');
+
+    try {
+      await authService.register(formData);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message || 'Registration failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,23 +93,16 @@ const SignUp = () => {
           <div className="form-row">
             <div className="form-group password-group">
               <input
-                type={showPassword ? "text" : "password"}
+                type="password"
                 placeholder="Password"
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
                 required
               />
-              <button 
-                type="button" 
-                className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
             </div>
             <div className="form-group password-group">
               <input
-                type={showPassword ? "text" : "password"}
+                type="password"
                 placeholder="Confirm"
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
@@ -88,25 +111,14 @@ const SignUp = () => {
             </div>
           </div>
 
-          <button type="submit" className="submit-btn">
-            Create Account
+          <button 
+            type="submit" 
+            className="submit-btn"
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} /> : 'Create Account'}
           </button>
         </form>
-
-        <div className="divider">
-          <span>OR</span>
-        </div>
-
-        <div className="social-auth">
-          <button className="google-btn">
-            <FaGoogle className="google-icon" />
-            Continue with Google
-          </button>
-          <button className="facebook-btn">
-            <FaFacebook className="facebook-icon" />
-            Continue with Facebook
-          </button>
-        </div>
 
         <div className="auth-footer">
           <p>
@@ -120,6 +132,12 @@ const SignUp = () => {
             </button>
           </p>
         </div>
+
+        {error && (
+          <Alert severity="error" className="error-alert">
+            {error}
+          </Alert>
+        )}
       </div>
     </div>
   );

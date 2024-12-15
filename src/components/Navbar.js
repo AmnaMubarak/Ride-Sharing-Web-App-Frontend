@@ -26,6 +26,7 @@ import {
   Close,
 } from '@mui/icons-material';
 import '../styles/Navbar.css';
+import { useAuth } from '../context/AuthContext';
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger();
@@ -39,10 +40,10 @@ const HideOnScroll = ({ children }) => {
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,7 +137,7 @@ const Navbar = () => {
               </Box>
 
               <Box className="nav-actions">
-                {isAuthenticated ? (
+                {user ? (
                   <>
                     <IconButton
                       size="large"
@@ -158,7 +159,10 @@ const Navbar = () => {
                       <MenuItem component={Link} to="/profile">Profile</MenuItem>
                       <MenuItem component={Link} to="/trips">My Trips</MenuItem>
                       <MenuItem component={Link} to="/settings">Settings</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                      <MenuItem onClick={() => {
+                        handleClose();
+                        logout();
+                      }}>Logout</MenuItem>
                     </Menu>
                   </>
                 ) : (

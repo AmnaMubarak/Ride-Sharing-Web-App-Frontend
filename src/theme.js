@@ -1,5 +1,19 @@
 import { createTheme } from '@mui/material/styles';
 
+// Create reusable style constants
+export const SPACING = {
+  xs: 8,
+  sm: 16,
+  md: 24,
+  lg: 32,
+};
+
+export const COLORS = {
+  primary: '#1976d2',
+  error: '#d32f2f',
+  // ... other colors
+};
+
 const theme = createTheme({
   palette: {
     primary: {

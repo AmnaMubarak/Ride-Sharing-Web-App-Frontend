@@ -154,33 +154,41 @@
 
 .social-auth {
   display: grid;
-  gap: 8px;
+  gap: 12px;
   margin: 16px 0;
 }
 
-.social-auth button {
+.google-btn,
+.facebook-btn {
   width: 100%;
-  padding: 10px;
-  border: 1.5px solid #e1e8ff;
+  padding: 12px;
+  border: 1px solid #e1e8ff;
   border-radius: 8px;
   background: white;
   font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: #333;
+}
+
+.google-btn {
+  color: #757575;
 }
 
 .google-btn:hover {
-  background: #f8faff;
+  background: #f8f9fa;
   border-color: #ea4335;
 }
 
+.facebook-btn {
+  color: #1877f2;
+}
+
 .facebook-btn:hover {
-  background: #f8faff;
+  background: #f8f9fa;
   border-color: #1877f2;
 }
 
@@ -192,6 +200,11 @@
 .facebook-icon {
   color: #1877f2;
   font-size: 18px;
+}
+
+.social-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .auth-footer {
@@ -271,4 +284,17 @@
     opacity: 1;
     transform: translateY(0);
   }
+} 
+
+.error-message {
+  color: #d32f2f;
+  background-color: #fde8e8;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in-out;
 } 
