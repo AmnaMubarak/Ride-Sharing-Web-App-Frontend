@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 
 class AuthService {
   constructor() {
-    this.isAuthenticated = this.checkAuth();
+    this.checkAuth();
   }
 
   checkAuth() {
@@ -17,25 +17,26 @@ class AuthService {
     }
   }
 
+  setAuthData(token, user) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  clearAuthData() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+
   getCurrentUser() {
-    try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        return decodedToken;
-      }
-      return null;
-    } catch {
-      return null;
-    }
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
   }
 
   async login(email, password) {
     try {
       const response = await api.post('/auth/login', { email, password });
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        this.isAuthenticated = true;
+        this.setAuthData(response.data.token, response.data.user);
         return response.data;
       }
       throw new Error('Login failed');
@@ -48,8 +49,7 @@ class AuthService {
     try {
       const response = await api.post('/auth/register', userData);
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        this.isAuthenticated = true;
+        this.setAuthData(response.data.token, response.data.user);
         return response.data;
       }
       throw new Error('Registration failed');
@@ -59,14 +59,8 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.isAuthenticated = false;
+    this.clearAuthData();
     window.location.href = '/login';
-  }
-
-  clearAuthData() {
-    localStorage.removeItem('token');
-    this.isAuthenticated = false;
   }
 
   handleApiError(error) {

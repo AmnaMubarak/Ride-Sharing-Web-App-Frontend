@@ -127,7 +127,7 @@ const HomePage = () => {
                     variant="outlined"
                     size="large"
                     className="secondary-button"
-                    onClick={() => navigate('/signup')}
+                    onClick={() => navigate('/signup?role=DRIVER')}
                   >
                     Become a Driver
                   </Button>

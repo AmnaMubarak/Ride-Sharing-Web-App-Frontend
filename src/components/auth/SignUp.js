@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import authService from '../../services/authService';
 import { CircularProgress } from '@mui/material';
 import { Alert } from '@mui/material';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'RIDER'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const role = params.get('role');
+    if (role === 'DRIVER') {
+      setFormData(prev => ({ ...prev, role: 'DRIVER' }));
+    }
+  }, [location]);
 
   const validateForm = () => {
     if (formData.password !== formData.confirmPassword) {
@@ -42,7 +52,7 @@ const SignUp = () => {
 
     try {
       await authService.register(formData);
-      navigate('/dashboard');
+      navigate('/login');
     } catch (err) {
       setError(err.message || 'Registration failed');
     } finally {
@@ -54,8 +64,8 @@ const SignUp = () => {
     <div className="auth-container">
       <div className="auth-form-container">
         <div className="auth-header">
-          <h1>Sign Up</h1>
-          <p>Join our community today</p>
+          <h1>{formData.role === 'DRIVER' ? 'Become a Driver' : 'Sign Up'}</h1>
+          <p>{formData.role === 'DRIVER' ? 'Join our driver community' : 'Join our community today'}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">

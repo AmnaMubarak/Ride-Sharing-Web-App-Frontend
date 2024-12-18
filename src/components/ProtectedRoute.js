@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import authService from '../services/authService';
 
 const ProtectedRoute = ({ children }) => {
-  if (!authService.isAuthenticated()) {
+  if (!authService.checkAuth()) {
     return <Navigate to="/login" />;
   }
 
