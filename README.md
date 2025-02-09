@@ -3,6 +3,8 @@
 ## Overview
 SwiftRide is a modern ride-sharing web application built with React that connects riders with drivers. The platform offers a seamless experience for both passengers and drivers with features like real-time booking, secure authentication, and an intuitive user interface.
 
+Deployed Link : https://swiftridesharingapp.vercel.app/
+
 ## Features
 - 🚗 User and Driver Registration/Authentication
 - 🔐 Secure Google and Facebook OAuth Integration
